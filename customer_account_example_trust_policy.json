@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::provideraccount:root"
+            },
+            "Action": "sts:AssumeRole"
+        },
+        {
+            "Sid": "AllowPassSessionTags",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::provideraccount:root"
+            },
+            "Action": "sts:TagSession",
+            "Condition": {
+                "StringLike": {
+                    "aws:RequestTag/OrgId": "customerA"
+                },
+                "ForAllValues:StringEquals": {
+                    "sts:TransitiveTagKeys": "OrgId"
+                }
+            }
+        }
+    ]
+}
